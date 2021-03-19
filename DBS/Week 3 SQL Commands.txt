@@ -1,0 +1,59 @@
+WEEK 2
+
+Q9) select name, dept_name from student;
+Q10) select name from instructor where dept_name = 'Comp. Sci.';
+Q11) select title from course where dept_name = 'Comp. Sci.' and credits = 3;
+Q12) select takes.course_id, title from takes, course where takes.ID = 12345
+         and takes.course_id = course.course_id;
+Q13) select name from instructor where salary between 40000 and 90000;
+Q14) select name,ID from instructor where ID not in (select distinct(ID) from teaches);
+Q15) select distinct(student.name), course.title, section.course_id, student.ID 
+         from student, course, takes, section 
+         where takes.course_id = section.course_id and section.room_number = 3128 
+                     and student.ID = takes.ID and course.course_id = section.course_id;
+Q16) select name, course.title as "c-name", takes.course_id 
+         from student, course, takes 
+         where takes.ID = student.ID and course.course_id = takes.course_id and takes.year = 2010;
+Q17) select distinct(i.name), i.salary as "inst-salary" 
+         from instructor i, (select salary from instructor where dept_name = 'Comp. Sci.') t 
+         where i.salary>t.salary;
+Q18) select name, dept_name from instructor where dept_name like '%omp%';
+Q19) select name, length(name) as "Length" from student;
+Q20) select dept_name, substr(dept_name, 3, 3) from department;
+Q21) select upper(name) from instructor;
+Q22) select course_id, nvl(grade, 'Z') from takes;
+Q23) select salary, salary/3-mod(salary/3, 100) as "third-sal" from instructor;
+
+WEEK 3
+
+Q1) select course_id from section where semester = 'Fall' and year = 2009 
+       union 
+       select course_id from section where semester = 'Spring' and year = 2010;
+Q2) select course_id from section where semester = 'Fall' and year = 2009 
+       intersect
+       select course_id from section where semester = 'Spring' and year = 2010;
+Q3) select course_id from section where semester = 'Fall' and year = 2009 
+       minus 
+       select course_id from section where semester = 'Spring' and year = 2010;
+Q4) select title, course_id from course where course_id not in (select course_id from takes);
+Q5) select distinct(course_id) 
+       from section 
+       where semester = 'Fall' and year = 2009 and course_id 
+       in (select course_id from section where semester = 'Spring' and year = 2010);
+Q6) select count(distinct ID) from takes where (course_id, sec_id, semester, year) in
+      (select course_id ,sec_id, semester, year from teaches where ID = 10101);
+Q7) select distinct(course_id) 
+       from section 
+       where semester = 'Fall' and year = 2009 and course_id 
+       not in (select course_id from section where semester = 'Spring' and year = 2010);
+Q8) select name from student where name in (select name from instructor);
+Q9) select distinct T.name from instructor T and instructor S where T.salary > S.salary and S.dept_name='Biology';
+Q10) select distinct name from instructor where salary >all (select salary from instructor where dept_name = 'Biology');
+Q11) select avg(salary), dept_name from instructor 
+         group by dept_name having avg(salary) >=all (select avg(salary) from instructor group by dept_name);
+Q12) select dept_name, budget from department where budget <all (select avg(salary) from instructor);
+Q13) In NB
+Q14) in NB
+Q15) in NB
+Q16) 
+Q17) in NB

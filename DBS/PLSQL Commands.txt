@@ -1,0 +1,244 @@
+Q1) 
+
+declare
+rollno StudentTable.RollNo%TYPE;
+gpa StudentTable.GPA%TYPE;
+begin
+select RollNo, GPA into rollno, gpa from StudentTable where RollNo = &r;
+dbms_output.put_line('RollNo: ' || rollno);
+dbms_output.put_line('GPA: ' || gpa);
+end;
+/
+
+Q2) 
+
+declare
+gpa StudentTable.GPA%TYPE;
+begin
+select GPA into gpa from StudentTable where RollNo = &r;
+IF (gpa < 4) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is F');
+ELSIF (gpa >= 4 and gpa <5) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is E');
+ELSIF (gpa >= 5 and gpa < 6) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is D');
+ELSIF (gpa >= 6 and gpa < 7) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is C');
+ELSIF (gpa >= 7 and gpa < 8) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is B');
+ELSIF (gpa >= 8 and gpa < 9) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is A');
+ELSIF (gpa >= 9 and gpa <= 10) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is A+');
+END IF;
+END;
+/
+
+Q3) 
+
+declare
+issuedate date;
+returndate date;
+diff number(4);
+fine number(4); 
+begin
+issuedate:= TO_DATE(&dateofissue,'DDMMYYYY');
+returndate:= TO_DATE(&dateofreturn,'DDMMYYYY');
+select returndate-issuedate into diff from dual;
+dbms_output.put_line('DIFFERENCE:' || diff);
+if (diff <= 0) then
+fine:=0;
+elsif (diff >= 8 and diff <= 15) then
+fine:= (diff-7)*1;
+elsif (diff >= 16 and diff < 30) then
+fine:= 8+(diff-15)*2;
+elsif (diff >= 30) then
+fine:= 5;
+else
+dbms_output.put_line('SELFISH');
+END IF;
+dbms_output.put_line('TOTAL FINE:' || fine);
+end;
+/
+
+Q4) 
+
+declare
+gpa StudentTable.GPA%TYPE;
+x number :=1;
+begin
+LOOP
+select GPA into gpa from StudentTable where RollNo = x;
+IF (gpa < 4) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is F');
+ELSIF (gpa >= 4 and gpa <5) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is E');
+ELSIF (gpa >= 5 and gpa < 6) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is D');
+ELSIF (gpa >= 6 and gpa < 7) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is C');
+ELSIF (gpa >= 7 and gpa < 8) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is B');
+ELSIF (gpa >= 8 and gpa < 9) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is A');
+ELSIF (gpa >= 9 and gpa <= 10) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is A+');
+END IF;
+x:=x+1;
+IF (x > 5) THEN EXIT;
+END IF;
+END LOOP;
+END;
+/
+
+Q5) 
+alter table StudentTable add (LetterGrade varchar2(2));
+
+declare
+gpa StudentTable.GPA%TYPE;
+x number :=1;
+grade varchar2(2);
+begin
+WHILE (x <= 5)
+LOOP
+select GPA into gpa from StudentTable where RollNo = x;
+IF (gpa < 4) THEN
+grade :='F';
+ELSIF (gpa >= 4 and gpa <5) THEN
+grade :='E';
+ELSIF (gpa >= 5 and gpa < 6) THEN
+grade :='D';
+ELSIF (gpa >= 6 and gpa < 7) THEN
+grade :='C';
+ELSIF (gpa >= 7 and gpa < 8) THEN
+grade :='B';
+ELSIF (gpa >= 8 and gpa < 9) THEN
+grade :='A';
+ELSIF (gpa >= 9 and gpa <= 10) THEN
+grade :='A+';
+END IF;
+update StudentTable set LetterGrade = grade where RollNo = x ;
+x:=x+1;
+END LOOP;
+END;
+/
+
+Q6) 
+
+declare
+gpa StudentTable.GPA%TYPE;
+x number :=1;
+maxi StudentTable.GPA%TYPE;
+begin
+select GPA into maxi from StudentTable where RollNo = 1;
+FOR x in 2..5 LOOP
+select GPA into gpa from StudentTable where RollNo = x;
+IF (gpa > maxi) THEN
+maxi := gpa;
+END IF; 
+END LOOP;
+DBMS_OUTPUT.PUT_LINE('Max GPA is: ' || maxi);
+END;
+ /
+
+Q7) 
+
+declare
+gpa StudentTable.GPA%TYPE;
+x number :=1;
+begin
+<<Printer>>
+select GPA into gpa from StudentTable where RollNo = x;
+IF (gpa < 4) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is F');
+ELSIF (gpa >= 4 and gpa <5) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is E');
+ELSIF (gpa >= 5 and gpa < 6) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is D');
+ELSIF (gpa >= 6 and gpa < 7) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is C');
+ELSIF (gpa >= 7 and gpa < 8) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is B');
+ELSIF (gpa >= 8 and gpa < 9) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is A');
+ELSIF (gpa >= 9 and gpa <= 10) THEN
+DBMS_OUTPUT.PUT_LINE('Grade is A+');
+END IF;
+x:=x+1;
+IF (x <= 5) THEN 
+GOTO Printer;
+END IF;
+END;
+ /
+
+
+Q8) 
+
+declare 
+Same_Name Exception;
+No_instructor Exception;
+inst_id instructor.ID%TYPE;
+inst_name instructor.name%TYPE;
+dept instructor.dept_name%TYPE;
+sal instructor.salary%TYPE;
+countname number;
+begin
+inst_name := '&name';
+select count(*) into countname from instructor where name = inst_name;
+IF (countname > 1) then
+RAISE Same_Name;
+ELSIF(countname = 0) then
+RAISE No_instructor;
+ELSE 
+select id, dept_name, salary into inst_id, dept, sal from instructor where name = inst_name;
+END IF;
+dbms_output.put_line('Id: ' || inst_id);
+dbms_output.put_line('Name: ' || inst_name);
+dbms_output.put_line('Department: ' || dept);
+dbms_output.put_line('Salary: ' || sal);
+EXCEPTION
+WHEN Same_Name then
+dbms_output.put_line('Multiple Instructors with same name!');
+WHEN No_instructor then
+dbms_output.put_line('No instructor with given name!');
+END;
+/
+
+
+Q9) 
+update StudentTable  set GPA = -1  where RollNo = 6;
+
+declare
+Out_Of_Range Exception;
+gpa StudentTable.GPA%TYPE;
+x number :=1;
+grade varchar2(2);
+begin
+WHILE (x <= 6)
+LOOP
+select GPA into gpa from StudentTable where RollNo = x;
+IF (gpa >=0 and gpa < 4) THEN
+grade :='F';
+ELSIF (gpa >= 4 and gpa <5) THEN
+grade :='E';
+ELSIF (gpa >= 5 and gpa < 6) THEN
+grade :='D';
+ELSIF (gpa >= 6 and gpa < 7) THEN
+grade :='C';
+ELSIF (gpa >= 7 and gpa < 8) THEN
+grade :='B';
+ELSIF (gpa >= 8 and gpa < 9) THEN
+grade :='A';
+ELSIF (gpa >= 9 and gpa <= 9.8) THEN
+grade :='A+';
+ELSE
+RAISE Out_Of_Range;
+END IF;
+update StudentTable set LetterGrade = grade where RollNo = x ;
+x:=x+1;
+END LOOP;
+EXCEPTION
+WHEN Out_Of_Range then
+dbms_output.put_line('GPA out of range!');
+END;
+/

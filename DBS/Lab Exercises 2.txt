@@ -1,0 +1,137 @@
+Q1) create table Employee (EmpNo Number(4) Primary Key, 
+		    EmpName varchar(20) not null,
+		    Gender char not null, 
+		    Salary number(6) not null,
+		    Address varchar(10) not null,
+		    Dno number(4),
+		    DOB date,
+                                        check(Gender in ('M', 'F')));
+
+Q2) create table Department(DeptNo number(4) Primary Key, 
+			DeptName varchar2(20) unique,
+			Location varchar2(20));
+
+Q3) alter table Employee add foreign key (Dno) references Department(DeptNo) on delete cascade;
+
+Q4) insert into Employee values(1001, 'Janmejay', 'M', 900000, 'Manipal', 100, '23-AUG-99');
+       insert into Employee values(1005, 'Harshita', 'F', 950000, 'Manipal', 100, '7-JUN-00');
+       insert into Employee values(1010, 'Tanishq', 'M', 800000, 'Manipal', 124, '08-JUN-00');
+       insert into Employee values(1015, 'Diya', 'F', 850000, 'Manipal', 115, '14-OCT-00');
+       insert into Department values(100, 'CSE', 'Manipal');
+       insert into Department values(124, 'ECE', 'Manipal');
+       insert into Department values(115, 'CCE', 'Manipal');
+       insert into Department values(136, 'EEE', 'Manipal');
+
+Q5) insert into Employee values(1001, 'Janmejay', 'M');
+
+Q6) delete from Department where DeptNo = 124;
+
+Q7) alter table Employee add foreign key (Dno) references Department(DeptNo) on delete cascade;
+
+Q8) alter table Employee modify Salary default 100000;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+			Creating Database for Next Questions
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table Department (DeptName varchar(10) Primary Key, 
+		building number(2),
+		budget number(6) default 100000);
+
+create table Instructor (ID number(4) Primary Key, 
+		Name varchar(20),
+		DeptName varchar(10),
+		Salary number(6),
+		foreign key (DeptName) references Department (DeptName) on delete cascade);
+
+create table Course (CourseId number(4) Primary Key,
+		Title varchar(10),
+		DeptName varchar(10),
+		Credits number(1),
+		foreign key (DeptName) references Department (DeptName) on delete cascade);
+
+create table Student (ID number(4) Primary Key,
+		Name varchar(20),
+		DeptName varchar(10),
+		TotCred number(3),
+		foreign key (DeptName) references Department (DeptName) on delete cascade);
+
+create table TimeSlot (TimeId number(4),
+		Day varchar(10),
+		StartTime number(4),
+		EndTime number(4),
+		Primary Key(TimeId, Day, StartTime));
+
+create table Section (CourseId number(4),
+		SecId number(2),
+		Semester number(1),
+		Year number(4),
+		building number(2),
+		RoomNo number(2),
+		TimeId number(4),
+		Primary Key(CourseId, SecId, Semester, Year),
+		foreign key (CourseId) references Course (CourseId) on delete cascade,
+		foreign key (TimeId) references TimeSlot (TimeId) on delete cascade);
+
+create table Teaches (Id number(4),
+		CourseId number(4),
+		SecId number(2),
+		Semester number(1),
+		Year number(4),
+		Primary Key (Id, CourseId, SecId, Semester, Year),
+		foreign key (Id) references Instructor (Id) on delete cascade,
+		foreign key (CourseId) references Section (CourseId) on delete cascade,
+		foreign key (SecId) references Section (SecId) on delete cascade,
+		foreign key (Semester) references Section (Semester) on delete cascade,
+		foreign key (Year) references Section (Year) on delete cascade);
+
+create table Takes (Id number(4),
+		CourseId number(4),
+		SecId number(2),
+		Semester number(1),
+		Year number(4),
+		Grade char,
+		Primary Key (Id, CourseId, SecId, Semester, Year),
+		foreign key (Id) references Student (Id) on delete cascade,
+		foreign key (CourseId) references Section (CourseId) on delete cascade,
+		foreign key (SecId) references Section (SecId) on delete cascade,
+		foreign key (Semester) references Section (Semester) on delete cascade,
+		foreign key (Year) references Section (Year) on delete cascade);
+
+create table Classroom (building number(2),
+		RoomNo number(2),
+		Capacity number(3)
+		Primary Key(building, RoomNo));
+
+create table Advisor(SId number(4),
+		InstId number(4),
+		Primary Key(SId, InstId),
+		foreign key (Sid) references Student (Id) on delete cascade,
+		foreign key (InstId) references Instructor (Id) on delete cascade);
+
+create table Prereq (CourseId number(4),
+		PrereqId number(4),
+		Primary Key(CourseId, PrereqId),
+		foreign key (CourseId) references Course (CourseId) on delete cascade);
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q24) select EmpName, to_char(dob, 'DD-MON-YYYY') from Employee;
+          select EmpName, to_char(dob, 'DD-MON-YY') from Employee;
+          select EmpName, to_char(dob, 'DD-MM-YY') from Employee;	
+
+Q25) select EmpName, to_char(dob, 'YEAR') from Employee;
+         select EmpName, to_char(dob, 'Year') from Employee;
+         select EmpName, to_char(dob, 'year') from Employee;
+
+Q26) select EmpName, to_char(dob, 'DAY') from Employee;
+          select EmpName, to_char(dob, 'Day') from Employee;
+
+Q27) select EmpName, to_char(dob, 'MONTH') from Employee;
+          select EmpName, to_char(dob, 'Month') from Employee;
+
+Q28) select EmpName, to_char(last_day(dob), 'Day') from Employee where EmpName = 'Janmejay';
+
+Q29) select months_between(sysdate, dob)/12 from Employee;          

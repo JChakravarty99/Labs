@@ -1,0 +1,10 @@
+create table Suppliers (sid varchar2(2) primary key,
+			sname varchar2(20),			
+			address varchar2(20));
+
+create table Catalog (sid varchar2(2),
+			pid varchar2(4),
+			cost number(5),
+			primary key(sid, pid),
+			foreign key sid references Suppliers(sid) on delete cascade);
+

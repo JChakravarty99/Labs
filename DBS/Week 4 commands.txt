@@ -1,0 +1,53 @@
+Q1) select count(distinct ID),course_id from takes group by course_id;
+
+Q2) select dept_name, count(*) from student group by dept_name having count(*)>10;
+
+Q3) select count(course_id), dept_name from course group by dept_name;
+
+Q4) select dept_name, avg(salary) from instructor group by dept_name having avg(salary)>42000;
+
+Q5) select count(distinct ID), sec_id from takes where semester = 'Spring' and year = 2009 group by sec_id;
+
+Q6) select course_id from prereq ORDER BY course_id;
+
+Q7) select * from instructor ORDER BY salary DESC;
+
+Q8) select max(sal) from (select dept_name, sum(salary) as sal from instructor group by dept_name);
+
+Q9) select sal from (select avg(salary) as sal from instructors group by dept_name) where sal>42000;
+
+Q10) select max(c) from (select count(distinct ID) as c from takes where semester = 'Spring' and year = 2010 group by sec_id);
+
+Q11) select distinct I.ID, I.name from instructor I where not exists((select course_id from course where dept_name = 'Music') minus (select T.course_id from teaches T where I.ID = T.ID));
+
+Q12) select sal from (select dept_name, avg(salary) as sal, count(*) from instructor group by dept_name having avg(salary)>50000 and count(*)>2);
+
+Q13) with max_budget(value) as (select max(budget) from department) select budget from department, max_budget where department.budget = max_budget.value;
+
+Q14) with dept_total(dept_name, value) as (select dept_name, sum(salary) from instructor group by dept_name), dept_total_avg(value) as (select avg(value) from dept_total) select dept_name from dept_total, dept_total_avg where dept_total.value >= dept_total_avg.value;
+
+Q15) with sec(sec_id,val) as (select sec_id,count(distinct id) c from takes where semester='Fall' and year=2009 group by (course_id,sec_id,year,semester)),
+maxsec(val) as (select max(val) from sec)
+select sec_id from sec,maxsec where sec.val=maxsec.val;
+
+Q16) with totcred(dname,cred) as (select dept_name,sum(tot_cred) from student group by dept_name),
+fcred(cred) as (select cred from totcred where dname='Finance')
+select dname from totcred,fcred where totcred.cred>fcred.cred;
+
+savepoint s01; 
+
+Q17) delete from instructor where dept_name='Finance';
+
+Q18) delete from course where dept_name='Comp. Sci.';
+
+Q19) update student set dept_name='Music' where dept_name='Comp. Sci.';
+
+Q20) update instructor set salary = salary*1.03 where salary > 100000; 
+          update instructor set salary = salary *1.05 where salary <=100000;
+
+Q21) insert into student select id, name , dept_name, 0 from instructor;
+
+Q22) delete from instructor where salary < (select avg(salary) from instructor);
+
+rollback;
+commit;

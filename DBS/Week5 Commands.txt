@@ -1,0 +1,52 @@
+Q1) select Bdate, Address from Employee where Fname like 'John' and Minit = 'B' and Lname = 'Smith';
+       select Fname, Minit, Lname, Address from Employee, Department1 where 
+       Employee.Dno = Department1.Dnumber and Dname = 'Research';
+
+Q2) select pnumber, Department1.dnumber, Employee.Lname, Address, Bdate 
+       from Project, Department1, Employee 
+       where Project.dnum = Department1.Dnumber and Project.Plocation = 'Stafford' and 
+       Employee.ssn = Department1.Mgr_ssn;
+
+Q3) select distinct salary from Employee;
+
+Q4) select E.Fname, E.Lname, M.Fname, M.Lname from Employee E, Employee M where E.Super_ssn = M.ssn;
+
+Q5) select distinct(Pnumber), Fname, Lname, ssn from Project, Employee, Works_on 
+       where Project.Dnum = Employee.Dno and Employee.Lname = 'Smith' and Employee.ssn = Works_on.Essn
+       and Project.Pnumber = Works_on.pno;
+
+Q6) select * from Employee where Address like '%Houston%';
+
+Q7) select salary*1.10 from Employee, Project, Works_on where Project.pnumber = Works_on.Pno and 
+       Project.Pname = 'ProductX' and Works_on.Essn = Employee.ssn;
+
+Q8) select * from Employee where dno = 5 and salary between 30000 and 40000;
+
+Q9) select distinct(Fname), Lname, Pno, Dno from Employee, Works_on, where ssn = Essn order by dno, lname, 
+       fname; 
+
+Q10) select Fname, Minit, Lname from Employee where Super_ssn is null;
+
+Q11) select Fname, Minit, Lname from Employee, Dependent 
+         where Employee.Fname = Dependent.Dependent_name and Employee.sex = Dependent.sex and 
+         Dependent.Essn = Employee.ssn;
+
+Q12) select Fname, Minit, Lname from employee where ssn not in (select Essn from Dependent);
+
+Q13) select Fname, Minit, Lname from employee where ssn in (select Essn from Dependent) and 
+         ssn in (select Mgr_ssn from Department1);
+
+Q14) select distinct essn from Works_on where Pno in (1,2,3);
+
+Q15) select sum(salary), max(salary), min(salary), avg(salary) from Employee;
+
+Q16) select sum(salary), max(salary), min(salary), avg(salary) from Employee, Department1 
+         where dno = dnumber group by dname having dname = 'Research';
+
+Q17) select Pnumber, Pname, count(*) from Project, Works_on where pnumber = pno 
+         group by pnumber, pname;
+
+Q18) select Pnumber, Pname, count(*) from Project, Works_on 
+         where pnumber = pno group by pnumber, pname having count(*)>2;
+
+Q19) 

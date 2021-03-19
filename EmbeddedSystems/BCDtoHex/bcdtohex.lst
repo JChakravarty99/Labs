@@ -1,0 +1,150 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET,DATA,READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         __Vectors
+    4 00000000 10000000        DCD              0X10000000
+    5 00000004 00000000        DCD              Reset_Handler
+    6 00000008                 ALIGN
+    7 00000008                 AREA             mycode, CODE, READONLY
+    8 00000000                 ENTRY
+    9 00000000                 EXPORT           Reset_Handler
+   10 00000000         Reset_Handler
+   11 00000000 480D            LDR              R0, =SRC
+   12 00000002 6801            LDR              R1, [R0]
+   13 00000004 4A0D            LDR              R2, =DST
+   14 00000006 F04F 0500       MOV              R5,#0
+   15 0000000A F04F 0301       MOV              R3, #1
+   16 0000000E F04F 0608       MOV              R6, #8
+   17 00000012 F04F 070A       LDR              R7, =0x0A
+   18 00000016         UP
+   19 00000016 F001 040F       AND              R4, R1, #0X0F
+   20 0000001A FB04 5503       MLA              R5, R4, R3, R5
+   21 0000001E FB03 F307       MUL              R3, R7
+   22 00000022 EA4F 1111       LSR              R1, R1, #4
+   23 00000026 F1A6 0601       SUB              R6, R6, #1
+   24 0000002A 2E00            CMP              R6, #0
+   25 0000002C D000            BEQ              exit
+   26 0000002E E7F2            B                UP
+   27 00000030         exit
+   28 00000030 6015            STR              R5, [R2]
+   29 00000032         STOP
+   30 00000032 E7FE            B                STOP
+   31 00000034 00000098 
+                       SRC     DCD              0x00000098
+   32 00000038 00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   33 00000000 00000000 
+                       DST     DCD              0
+   34 00000004                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\bcdtoh
+ex.d -o.\bcdtohex.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Kei
+l\ARM\Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\bcdtohex.lst BCDtoHe
+x\BCDtoHex.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file BCDtoHex\BCDtoHex.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 3 in file BCDtoHex\BCDtoHex.s
+   Uses
+      At line 2 in file BCDtoHex\BCDtoHex.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 10 in file BCDtoHex\BCDtoHex.s
+   Uses
+      At line 5 in file BCDtoHex\BCDtoHex.s
+      At line 9 in file BCDtoHex\BCDtoHex.s
+
+SRC 00000034
+
+Symbol: SRC
+   Definitions
+      At line 31 in file BCDtoHex\BCDtoHex.s
+   Uses
+      At line 11 in file BCDtoHex\BCDtoHex.s
+Comment: SRC used once
+STOP 00000032
+
+Symbol: STOP
+   Definitions
+      At line 29 in file BCDtoHex\BCDtoHex.s
+   Uses
+      At line 30 in file BCDtoHex\BCDtoHex.s
+Comment: STOP used once
+UP 00000016
+
+Symbol: UP
+   Definitions
+      At line 18 in file BCDtoHex\BCDtoHex.s
+   Uses
+      At line 26 in file BCDtoHex\BCDtoHex.s
+Comment: UP used once
+exit 00000030
+
+Symbol: exit
+   Definitions
+      At line 27 in file BCDtoHex\BCDtoHex.s
+   Uses
+      At line 25 in file BCDtoHex\BCDtoHex.s
+Comment: exit used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 7 in file BCDtoHex\BCDtoHex.s
+   Uses
+      None
+Comment: mycode unused
+6 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DST 00000000
+
+Symbol: DST
+   Definitions
+      At line 33 in file BCDtoHex\BCDtoHex.s
+   Uses
+      At line 13 in file BCDtoHex\BCDtoHex.s
+Comment: DST used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 32 in file BCDtoHex\BCDtoHex.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+343 symbols in table

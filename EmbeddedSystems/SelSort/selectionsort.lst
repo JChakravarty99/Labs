@@ -1,0 +1,245 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET,DATA,READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         __Vectors
+    4 00000000 10001000        DCD              0x10001000
+    5 00000004 00000000        DCD              Reset_Handler
+    6 00000008                 ALIGN
+    7 00000008                 AREA             mycode,CODE,READONLY
+    8 00000000                 ENTRY
+    9 00000000                 EXPORT           Reset_Handler
+   10 00000000         Reset_Handler
+   11 00000000 4824            LDR              R0, =SRC    ;r0 is pointer to i
+                                                            th element
+   12 00000002 4925            LDR              R1, =N1
+   13 00000004 680A            LDR              R2,[r1]     ;r2 stores number o
+                                                            f elements
+   14 00000006 4F25            LDR              R7, =DST
+   15 00000008 F04F 0800       MOV              R8,#0
+   16 0000000C         up
+   17 0000000C 4590            CMP              R8,R2
+   18 0000000E D006            BEQ              out
+   19 00000010 F108 0801       ADD              R8,#1
+   20 00000014 F850 9B04       LDR              R9,[R0],#4
+   21 00000018 F847 9B04       STR              R9,[R7],#4
+   22 0000001C E7F6            B                up
+   23 0000001E         out
+   24 0000001E 481F            LDR              R0,=DST
+   25 00000020 4601            MOV              R1, R0      ;r1 is pointer to e
+                                                            lement to swap
+   26 00000022 4603            MOV              R3,R0       ;r3 is pointer to j
+                                                            th element
+   27 00000024 F04F 0A00       MOV              R10,#0      ;r10 is counter for
+                                                             inner(j) loop
+   28 00000028 F04F 0B00       MOV              R11,#0      ;r11 is counter for
+                                                             outer(i) loop
+   29 0000002C         lp1
+   30 0000002C 4593            CMP              R11, R2     ;comparing i<10
+   31 0000002E D019            BEQ              STOP
+   32 00000030 F100 0304       ADD              R3,R0,#4    ;sets jth pointer t
+                                                            o A[i+1]
+   33 00000034 4601            MOV              R1,R0       ;sets swap element 
+                                                            to A[i]
+   34 00000036 F10B 0A01       ADD              R10,R11,#1  ;j=i+1
+   35 0000003A         lp2
+   36 0000003A 4592            CMP              R10,R2      ;j<10
+   37 0000003C D00A            BEQ              oif
+   38 0000003E F10A 0A01       ADD              R10,#1      ;j++
+   39 00000042 F853 4B04       LDR              R4,[R3],#4
+   40 00000046 680D            LDR              R5,[R1]
+   41 00000048 42A5            CMP              R5,R4
+   42 0000004A DBF6            BLT              lp2
+   43 0000004C 4619            MOV              R1,R3
+   44 0000004E F1A1 0104       SUB              R1,#4
+   45 00000052 E7F2            B                lp2
+   46 00000054         oif
+   47 00000054 F10B 0B01       ADD              R11,#1
+   48 00000058 6804            LDR              R4,[R0]
+   49 0000005A 680D            LDR              R5,[R1]
+   50 0000005C 600C            STR              R4,[R1]
+   51 0000005E F840 5B04       STR              R5,[R0],#4
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   52 00000062 E7E3            B                lp1
+   53 00000064         STOP
+   54 00000064 E7FE            B                STOP
+   55 00000066         
+   56 00000066 00 00 0000000A 
+                       N1      dcd              0xA
+   57 0000006C 0000000A 
+              00000007 
+              00000004 
+              00000003 
+              00000006 
+              00000001 
+              00000005 
+              00000002 
+              00000009 
+              00000008 SRC     dcd              10, 7, 4, 3, 6, 1, 5, 2, 9, 8
+   58 00000094 00000000 
+              00000000 
+              00000000 
+              00000000         AREA             mydata,DATA,READWRITE
+   59 00000000 00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 DST     DCD              0,0,0,0,0
+   60 00000014                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\select
+ionsort.d -o.\selectionsort.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Includ
+e -IC:\Keil\ARM\Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\selections
+ort.lst SelSort\selectionSort.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file SelSort\selectionSort.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 3 in file SelSort\selectionSort.s
+   Uses
+      At line 2 in file SelSort\selectionSort.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+N1 00000068
+
+Symbol: N1
+   Definitions
+      At line 56 in file SelSort\selectionSort.s
+   Uses
+      At line 12 in file SelSort\selectionSort.s
+Comment: N1 used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 10 in file SelSort\selectionSort.s
+   Uses
+      At line 5 in file SelSort\selectionSort.s
+      At line 9 in file SelSort\selectionSort.s
+
+SRC 0000006C
+
+Symbol: SRC
+   Definitions
+      At line 57 in file SelSort\selectionSort.s
+   Uses
+      At line 11 in file SelSort\selectionSort.s
+Comment: SRC used once
+STOP 00000064
+
+Symbol: STOP
+   Definitions
+      At line 53 in file SelSort\selectionSort.s
+   Uses
+      At line 31 in file SelSort\selectionSort.s
+      At line 54 in file SelSort\selectionSort.s
+
+lp1 0000002C
+
+Symbol: lp1
+   Definitions
+      At line 29 in file SelSort\selectionSort.s
+   Uses
+      At line 52 in file SelSort\selectionSort.s
+Comment: lp1 used once
+lp2 0000003A
+
+Symbol: lp2
+   Definitions
+      At line 35 in file SelSort\selectionSort.s
+   Uses
+      At line 42 in file SelSort\selectionSort.s
+      At line 45 in file SelSort\selectionSort.s
+
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 7 in file SelSort\selectionSort.s
+   Uses
+      None
+Comment: mycode unused
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+oif 00000054
+
+Symbol: oif
+   Definitions
+      At line 46 in file SelSort\selectionSort.s
+   Uses
+      At line 37 in file SelSort\selectionSort.s
+Comment: oif used once
+out 0000001E
+
+Symbol: out
+   Definitions
+      At line 23 in file SelSort\selectionSort.s
+   Uses
+      At line 18 in file SelSort\selectionSort.s
+Comment: out used once
+up 0000000C
+
+Symbol: up
+   Definitions
+      At line 16 in file SelSort\selectionSort.s
+   Uses
+      At line 22 in file SelSort\selectionSort.s
+Comment: up used once
+10 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DST 00000000
+
+Symbol: DST
+   Definitions
+      At line 59 in file SelSort\selectionSort.s
+   Uses
+      At line 14 in file SelSort\selectionSort.s
+      At line 24 in file SelSort\selectionSort.s
+
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 58 in file SelSort\selectionSort.s
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+347 symbols in table

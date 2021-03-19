@@ -1,0 +1,172 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         __Vectors
+    4 00000000 10001000        DCD              0x10001000
+    5 00000004 00000000        DCD              Reset_Handler
+    6 00000008                 ALIGN
+    7 00000008                 AREA             mycode, CODE, READONLY
+    8 00000000                 ENTRY
+    9 00000000                 EXPORT           Reset_Handler
+   10 00000000         Reset_Handler
+   11 00000000 4918            LDR              R1, =ARR
+   12 00000002 4A19            LDR              R2, =ELE
+   13 00000004 F04F 030A       MOV              R3, #10
+   14 00000008 4F18            LDR              R7, =result
+   15 0000000A F8D2 8000       LDR              R8, [R2]
+   16 0000000E         Loop
+   17 0000000E F851 0B04       LDR              R0, [R1], #4
+   18 00000012 4580            CMP              R8, R0
+   19 00000014 D006            BEQ              Store
+   20 00000016 3B01            SUBS             R3, #1
+   21 00000018 D1F9            BNE              Loop
+   22 0000001A F04F 0400       MOV              R4, #0
+   23 0000001E F847 4B01       STR              R4, [R7], #1
+   24 00000022 E007            B                STOP
+   25 00000024         Store
+   26 00000024 F04F 0401       MOV              R4, #1
+   27 00000028 F04F 050A       MOV              R5, #10
+   28 0000002C 1AEB            SUBS             R3, R5, R3
+   29 0000002E F807 4B01       STRB             R4, [R7], #1
+   30 00000032 603B            STR              R3, [R7]
+   31 00000034         STOP
+   32 00000034 E7FE            B                STOP
+   33 00000036 00 00 00000006 
+              00000005 
+              00000003 
+              00000009 
+              00000002 
+              00000001 
+              00000004 
+              00000007 
+              00000008 
+              00000000 ARR     DCD              6,5,3,9,2,1,4,7,8,0
+   34 00000060 00000004 
+                       ELE     DCD              4
+   35 00000064 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   36 00000000 00000000 
+                       result  dcd              0
+   37 00000004                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=".\linea
+r search.d" -o".\linear search.o" -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\In
+clude -IC:\Keil\ARM\Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\linear
+ search.lst "Linear Search\Linear Search.s"
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file Linear
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 3 in file Linear
+   Uses
+      At line 2 in file Linear
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ARR 00000038
+
+Symbol: ARR
+   Definitions
+      At line 33 in file Linear
+   Uses
+      At line 11 in file Linear
+Comment: ARR used once
+ELE 00000060
+
+Symbol: ELE
+   Definitions
+      At line 34 in file Linear
+   Uses
+      At line 12 in file Linear
+Comment: ELE used once
+Loop 0000000E
+
+Symbol: Loop
+   Definitions
+      At line 16 in file Linear
+   Uses
+      At line 21 in file Linear
+Comment: Loop used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 10 in file Linear
+   Uses
+      At line 5 in file Linear
+      At line 9 in file Linear
+
+STOP 00000034
+
+Symbol: STOP
+   Definitions
+      At line 31 in file Linear
+   Uses
+      At line 24 in file Linear
+      At line 32 in file Linear
+
+Store 00000024
+
+Symbol: Store
+   Definitions
+      At line 25 in file Linear
+   Uses
+      At line 19 in file Linear
+Comment: Store used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 7 in file Linear
+   Uses
+      None
+Comment: mycode unused
+7 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 35 in file Linear
+   Uses
+      None
+Comment: mydata unused
+result 00000000
+
+Symbol: result
+   Definitions
+      At line 36 in file Linear
+   Uses
+      At line 14 in file Linear
+Comment: result used once
+2 symbols
+344 symbols in table

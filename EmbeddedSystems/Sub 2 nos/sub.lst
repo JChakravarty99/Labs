@@ -1,0 +1,132 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET, DATA, READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 10001000        DCD              0x10001000
+    6 00000004 00000000        DCD              Reset_Handler
+    7 00000008                 ALIGN
+    8 00000008                 AREA             mycode,CODE, READONLY
+    9 00000000                 ENTRY
+   10 00000000                 EXPORT           Reset_Handler
+   11 00000000         
+   12 00000000         Reset_Handler
+   13 00000000 4802            LDR              R0, N1
+   14 00000002 4903            LDR              R1, N2
+   15 00000004 4A04            LDR              R2, =DST
+   16 00000006 1A43            SUBS             R3, R0, R1
+   17 00000008 6013            STR              R3, [R2]
+   18 0000000A         
+   19 0000000A 00 00 0000000A 
+                       N1      DCD              10
+   20 00000010 00000008 
+                       N2      DCD              8
+   21 00000014         STOP
+   22 00000014 E7FE            B                STOP
+   23 00000016 00 00 00000000  AREA             mydata, DATA, READWRITE
+   24 00000000 00000000 
+                       DST     DCD              0
+   25 00000004                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\sub.d 
+-o.\sub.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\
+NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\sub.lst "Sub 2 nos\Sub.s"
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file Sub
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file Sub
+   Uses
+      At line 2 in file Sub
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+N1 0000000C
+
+Symbol: N1
+   Definitions
+      At line 19 in file Sub
+   Uses
+      At line 13 in file Sub
+Comment: N1 used once
+N2 00000010
+
+Symbol: N2
+   Definitions
+      At line 20 in file Sub
+   Uses
+      At line 14 in file Sub
+Comment: N2 used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 12 in file Sub
+   Uses
+      At line 6 in file Sub
+      At line 10 in file Sub
+
+STOP 00000014
+
+Symbol: STOP
+   Definitions
+      At line 21 in file Sub
+   Uses
+      At line 22 in file Sub
+Comment: STOP used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 8 in file Sub
+   Uses
+      None
+Comment: mycode unused
+5 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DST 00000000
+
+Symbol: DST
+   Definitions
+      At line 24 in file Sub
+   Uses
+      At line 15 in file Sub
+Comment: DST used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 23 in file Sub
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+342 symbols in table

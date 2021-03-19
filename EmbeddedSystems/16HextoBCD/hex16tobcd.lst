@@ -1,0 +1,191 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET,DATA,READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         __Vectors
+    4 00000000 10001000        DCD              0x10001000
+    5 00000004 00000000        DCD              Reset_Handler
+    6 00000008                 ALIGN
+    7 00000008                 AREA             mycode,CODE,READONLY
+    8 00000000                 ENTRY
+    9 00000000                 EXPORT           Reset_Handler
+   10 00000000         Reset_Handler
+   11 00000000 4818            LDR              r0, =n1
+   12 00000002 4F19            LDR              r7, =dst
+   13 00000004 6801            LDR              r1, [r0]
+   14 00000006 460C            MOV              r4, r1      ;copy the number in
+                                                             r4
+   15 00000008 F04F 0200       MOV              r2, #0      ;stores the quotien
+                                                            t
+   16 0000000C         up
+   17 0000000C 2C0A            CMP              r4, #0xA
+   18 0000000E D304            BCC              store
+   19 00000010 F1A4 040A       SUB              r4, #0xA
+   20 00000014 F102 0201       ADD              r2, #1
+   21 00000018 E7F8            B                up
+   22 0000001A         store
+   23 0000001A F807 4B01       STRB             r4, [r7], #1
+   24 0000001E 4614            MOV              r4, r2
+   25 00000020 F04F 0200       MOV              r2, #0
+   26 00000024 2C00            CMP              r4, #0
+   27 00000026 D1F1            BNE              up
+   28 00000028 F8DF 8040       LDR              r8, =ans
+   29 0000002C 4F0E            LDR              r7, =dst
+   30 0000002E F817 2B01       LDRB             r2, [r7],#1
+   31 00000032 F817 3B01       LDRB             r3, [r7],#1
+   32 00000036 EA4F 1303       LSL              r3, #4
+   33 0000003A EA43 0302       ORR              r3, r2
+   34 0000003E F808 3B01       STRB             r3, [r8],#1
+   35 00000042 F817 2B01       LDRB             r2, [r7],#1
+   36 00000046 F817 3B01       LDRB             r3, [r7],#1
+   37 0000004A EA4F 1303       LSL              r3, #4
+   38 0000004E EA43 0302       ORR              r3,r2
+   39 00000052 F808 3B01       STRB             r3, [r8],#1
+   40 00000056 783B            LDRB             r3, [r7]
+   41 00000058 F888 3000       STRB             r3, [r8]
+   42 0000005C         stop
+   43 0000005C E7FE            B                stop
+   44 0000005E 00 00 0000000F 
+                       n1      dcd              0x000000F
+   45 00000064 00000000 
+              00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   46 00000000 00000000 
+              00000000 
+              00000000 
+              00000000 
+              00000000 dst     DCD              0,0,0,0,0
+   47 00000014 00000000 
+              00000000 
+              00000000 
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+              00000000 
+              00000000 ans     DCD              0,0,0,0,0
+   48 00000028                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\hex16t
+obcd.d -o.\hex16tobcd.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:
+\Keil\ARM\Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\hex16tobcd.lst 1
+6HextoBCD\hex16tobcd.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 3 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 2 in file 16HextoBCD\hex16tobcd.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 10 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 5 in file 16HextoBCD\hex16tobcd.s
+      At line 9 in file 16HextoBCD\hex16tobcd.s
+
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 7 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      None
+Comment: mycode unused
+n1 00000060
+
+Symbol: n1
+   Definitions
+      At line 44 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 11 in file 16HextoBCD\hex16tobcd.s
+Comment: n1 used once
+stop 0000005C
+
+Symbol: stop
+   Definitions
+      At line 42 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 43 in file 16HextoBCD\hex16tobcd.s
+Comment: stop used once
+store 0000001A
+
+Symbol: store
+   Definitions
+      At line 22 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 18 in file 16HextoBCD\hex16tobcd.s
+Comment: store used once
+up 0000000C
+
+Symbol: up
+   Definitions
+      At line 16 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 21 in file 16HextoBCD\hex16tobcd.s
+      At line 27 in file 16HextoBCD\hex16tobcd.s
+
+6 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ans 00000014
+
+Symbol: ans
+   Definitions
+      At line 47 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 28 in file 16HextoBCD\hex16tobcd.s
+Comment: ans used once
+dst 00000000
+
+Symbol: dst
+   Definitions
+      At line 46 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      At line 12 in file 16HextoBCD\hex16tobcd.s
+      At line 29 in file 16HextoBCD\hex16tobcd.s
+
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 45 in file 16HextoBCD\hex16tobcd.s
+   Uses
+      None
+Comment: mydata unused
+3 symbols
+344 symbols in table

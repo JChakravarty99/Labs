@@ -1,0 +1,160 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             RESET,DATA,READONLY
+    2 00000000                 EXPORT           __Vectors
+    3 00000000         
+    4 00000000         __Vectors
+    5 00000000 40001000        DCD              0x40001000
+    6 00000004 00000000        DCD              Reset_Handler
+    7 00000008                 ALIGN
+    8 00000008                 AREA             mycode, CODE, READONLY
+    9 00000000                 ENTRY
+   10 00000000                 EXPORT           Reset_Handler
+   11 00000000         Reset_Handler
+   12 00000000 480B            LDR              R0, =N1
+   13 00000002 490C            LDR              R1, =N2
+   14 00000004 4E0C            LDR              R6, =DST
+   15 00000006 6802            LDR              R2, [R0]
+   16 00000008 680B            LDR              R3, [R1]
+   17 0000000A F04F 0400       MOV              R4, #0
+   18 0000000E F04F 0500       MOV              R5, #0
+   19 00000012         UP
+   20 00000012 429A            CMP              R2, R3
+   21 00000014 D304            BCC              STORE
+   22 00000016 EBA2 0203       SUB              R2, R3
+   23 0000001A F104 0401       ADD              R4, #1
+   24 0000001E E7F8            B                UP
+   25 00000020         STORE
+   26 00000020 F846 4B04       STR              R4, [R6], #4
+   27 00000024 6032            STR              R2, [R6]
+   28 00000026         STOP
+   29 00000026 E7FE            B                STOP
+   30 00000028 0000000A 
+                       N1      DCD              10
+   31 0000002C 00000005 
+                       N2      DCD              5
+   32 00000030 00000000 
+              00000000 
+              00000000         AREA             mydata, DATA, READWRITE
+   33 00000000 00000000 
+              00000000 DST     DCD              0,0
+   34 00000008                 END
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\divide
+2.d -o.\divide2.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\
+ARM\Inc\NXP\LPC17xx --predefine="__EVAL SETA 1" --list=.\divide2.lst "Divide no
+s\Divide2.s"
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 1 in file Divide
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 4 in file Divide
+   Uses
+      At line 2 in file Divide
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+N1 00000028
+
+Symbol: N1
+   Definitions
+      At line 30 in file Divide
+   Uses
+      At line 12 in file Divide
+Comment: N1 used once
+N2 0000002C
+
+Symbol: N2
+   Definitions
+      At line 31 in file Divide
+   Uses
+      At line 13 in file Divide
+Comment: N2 used once
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 11 in file Divide
+   Uses
+      At line 6 in file Divide
+      At line 10 in file Divide
+
+STOP 00000026
+
+Symbol: STOP
+   Definitions
+      At line 28 in file Divide
+   Uses
+      At line 29 in file Divide
+Comment: STOP used once
+STORE 00000020
+
+Symbol: STORE
+   Definitions
+      At line 25 in file Divide
+   Uses
+      At line 21 in file Divide
+Comment: STORE used once
+UP 00000012
+
+Symbol: UP
+   Definitions
+      At line 19 in file Divide
+   Uses
+      At line 24 in file Divide
+Comment: UP used once
+mycode 00000000
+
+Symbol: mycode
+   Definitions
+      At line 8 in file Divide
+   Uses
+      None
+Comment: mycode unused
+7 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DST 00000000
+
+Symbol: DST
+   Definitions
+      At line 33 in file Divide
+   Uses
+      At line 14 in file Divide
+Comment: DST used once
+mydata 00000000
+
+Symbol: mydata
+   Definitions
+      At line 32 in file Divide
+   Uses
+      None
+Comment: mydata unused
+2 symbols
+344 symbols in table
